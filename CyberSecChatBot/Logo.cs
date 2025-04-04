@@ -11,7 +11,7 @@ namespace CyberSecChatBot
             // Display heading
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("+--------------------------------------------------+");
-            Console.WriteLine("|         Hi, I'm your personalized chatbot!       |");
+            Console.WriteLine("|         Hello, I'm your personalized chatbot!       |");
             Console.WriteLine("+--------------------------------------------------+");
 
             // Get full project path and image
