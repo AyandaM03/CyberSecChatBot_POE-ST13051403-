@@ -8,6 +8,10 @@ namespace CyberSecChatBot
         private string user_name = string.Empty;
         private string user_asking = string.Empty;
 
+        //the instances for the new classes
+        private UserMemory userMemory = new UserMemory();
+        private SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
+        private ResponseManager responseManager = new ResponseManager();
         public void StartInteraction()
         {
             // Clear screen and set up header
@@ -49,11 +53,30 @@ namespace CyberSecChatBot
                 user_asking = Console.ReadLine()?.Trim().ToLower();
 
                 if (user_asking != "exit")
-                {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    TypeEffect("ChatBot: " + responseHandler.GetResponse(user_asking));
+                {// Sentiment analysis
+                    string sentiment = sentimentAnalyzer.AnalyzeSentiment(user_asking);
+
+                    // Adjust response based on sentiment
+                    if (sentiment == "worried")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        TypeEffect("ChatBot: It's okay to feel worried. Let me guide you on how to stay safe online.");
+                    }
+                    else if (sentiment == "happy")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        TypeEffect("ChatBot: I'm glad to hear you're feeling good! Let’s keep learning about cybersecurity.");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        string response = responseManager.GetRandomResponse(user_asking);
+                        TypeEffect("ChatBot: " + response);
+                    }
+
                     Console.ResetColor();
                 }
+
 
             } while (user_asking != "exit");
 
