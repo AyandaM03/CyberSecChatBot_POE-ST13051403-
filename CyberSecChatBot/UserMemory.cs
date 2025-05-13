@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CyberSecChatBot
 {
-    public class UserMemory
+    public class UserMemory1
     {
         private Dictionary<string, string> userData = new Dictionary<string, string>();
 

@@ -29,6 +29,7 @@ namespace CyberSecChatBot
             Console.Write("You: ");
             Console.ForegroundColor = ConsoleColor.White;
             user_name = Console.ReadLine();
+            userMemory.SaveUserData("name", user_name);
             Console.WriteLine();
 
             // Greet the user
@@ -69,9 +70,17 @@ namespace CyberSecChatBot
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        // First try to get a random response for known topics
                         string response = responseManager.GetRandomResponse(user_asking);
+
+                        // If topic not found, fall back to basic responses
+                        if (response == "Sorry, I don't have information on that topic.")
+                        {
+                            response = responseHandler.GetResponse(user_asking);
+                        }
+
                         TypeEffect("ChatBot: " + response);
+
                     }
 
                     Console.ResetColor();

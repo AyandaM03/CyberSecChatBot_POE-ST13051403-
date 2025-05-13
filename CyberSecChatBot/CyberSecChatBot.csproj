@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IUserMemory.cs" />
     <Compile Include="Logo.cs" />
     <Compile Include="PlayNow.cs" />
     <Compile Include="Program.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="SentimentAnalyzer.cs" />
     <Compile Include="UserMemory.cs" />
     <Compile Include="UserMemory1.cs" />
+    <Compile Include="UserMemory2.cs" />
     <Compile Include="UserPrompt.cs" />
   </ItemGroup>
   <ItemGroup>

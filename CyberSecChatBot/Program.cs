@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CyberSecChatBot
 {
-   public  class Program
+    public class Program
     {
+
         static void Main(string[] args)
         {
             // Display ASCII Logo
@@ -30,7 +32,7 @@ namespace CyberSecChatBot
             ResponseManager responseManager = new ResponseManager();
 
 
-
-
         }
     }
+}
+
