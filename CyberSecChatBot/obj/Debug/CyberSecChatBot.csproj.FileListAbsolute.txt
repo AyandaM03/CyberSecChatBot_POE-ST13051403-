@@ -1,7 +1,0 @@
-C:\Users\ayand\Desktop\PROG 2A\PROG 2A POE\PART 1\CyberSecChatBot\CyberSecChatBot\bin\Debug\CyberSecChatBot.exe.config
-C:\Users\ayand\Desktop\PROG 2A\PROG 2A POE\PART 1\CyberSecChatBot\CyberSecChatBot\bin\Debug\CyberSecChatBot.exe
-C:\Users\ayand\Desktop\PROG 2A\PROG 2A POE\PART 1\CyberSecChatBot\CyberSecChatBot\bin\Debug\CyberSecChatBot.pdb
-C:\Users\ayand\Desktop\PROG 2A\PROG 2A POE\PART 1\CyberSecChatBot\CyberSecChatBot\obj\Debug\CyberSecChatBot.csproj.AssemblyReference.cache
-C:\Users\ayand\Desktop\PROG 2A\PROG 2A POE\PART 1\CyberSecChatBot\CyberSecChatBot\obj\Debug\CyberSecChatBot.csproj.CoreCompileInputs.cache
-C:\Users\ayand\Desktop\PROG 2A\PROG 2A POE\PART 1\CyberSecChatBot\CyberSecChatBot\obj\Debug\CyberSecChatBot.exe
-C:\Users\ayand\Desktop\PROG 2A\PROG 2A POE\PART 1\CyberSecChatBot\CyberSecChatBot\obj\Debug\CyberSecChatBot.pdb
