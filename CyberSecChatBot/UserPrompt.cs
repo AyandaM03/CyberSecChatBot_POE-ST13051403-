@@ -8,10 +8,10 @@ namespace CyberSecChatBot
         private string user_name = string.Empty;
         private string user_asking = string.Empty;
 
-        //the instances for the new classes
         private UserMemory userMemory = new UserMemory();
         private SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
         private ResponseManager responseManager = new ResponseManager();
+
         public void StartInteraction()
         {
             // Clear screen and set up header
@@ -54,38 +54,49 @@ namespace CyberSecChatBot
                 user_asking = Console.ReadLine()?.Trim().ToLower();
 
                 if (user_asking != "exit")
-                {// Sentiment analysis
+                {
                     string sentiment = sentimentAnalyzer.AnalyzeSentiment(user_asking);
 
-                    // Adjust response based on sentiment
                     if (sentiment == "worried")
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        TypeEffect("ChatBot: It's okay to feel worried. Let me guide you on how to stay safe online.");
+                        TypeEffect("ChatBot: It's okay to feel worried. I'm here to help you stay safe online.");
                     }
                     else if (sentiment == "happy")
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        TypeEffect("ChatBot: I'm glad to hear you're feeling good! Let’s keep learning about cybersecurity.");
+                        TypeEffect("ChatBot: Love that energy! Let’s learn more about cybersecurity!");
                     }
                     else
                     {
-                        // First try to get a random response for known topics
                         string response = responseManager.GetRandomResponse(user_asking);
 
-                        // If topic not found, fall back to basic responses
-                        if (response == "Sorry, I don't have information on that topic.")
+                        // Save topic memory
+                        if (user_asking.Contains("privacy") || user_asking.Contains("password") || user_asking.Contains("phishing"))
                         {
-                            response = responseHandler.GetResponse(user_asking);
+                            userMemory.SaveUserData("topic", user_asking);
                         }
 
-                        TypeEffect("ChatBot: " + response);
-
+                        if (user_asking.Contains("remind me") || user_asking.Contains("remember"))
+                        {
+                            string savedTopic = userMemory.GetUserData("topic");
+                            if (!string.IsNullOrEmpty(savedTopic))
+                            {
+                                TypeEffect($"ChatBot: You mentioned interest in '{savedTopic}'. Let’s explore that more.");
+                            }
+                            else
+                            {
+                                TypeEffect("ChatBot: I don't remember you mentioning a topic yet.");
+                            }
+                        }
+                        else
+                        {
+                            TypeEffect("ChatBot: " + response);
+                        }
                     }
 
                     Console.ResetColor();
                 }
-
 
             } while (user_asking != "exit");
 
@@ -97,7 +108,7 @@ namespace CyberSecChatBot
             if (asked == "exit")
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                TypeEffect("ChatBot: Goodbye, Have a great day and remeber, Stay safe online!");
+                TypeEffect("ChatBot: Goodbye! Stay safe online!");
                 Console.ResetColor();
                 Thread.Sleep(1000);
                 Environment.Exit(0);
@@ -118,7 +129,7 @@ namespace CyberSecChatBot
             foreach (char c in message)
             {
                 Console.Write(c);
-                Thread.Sleep(20); // Delay per character (20ms)
+                Thread.Sleep(20);  // Delay per character (20ms)
             }
             Console.WriteLine();
         }

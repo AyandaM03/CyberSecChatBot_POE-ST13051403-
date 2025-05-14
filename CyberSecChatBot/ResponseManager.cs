@@ -5,33 +5,47 @@ namespace CyberSecChatBot
 {
     public class ResponseManager
     {
-        private Dictionary<string, List<string>> topicResponses = new Dictionary<string, List<string>>()
+        private Dictionary<string, List<string>> keywordResponses = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
         {
-            { "phishing", new List<string>
-                {
-                    "Be cautious of emails asking for personal information. Scammers often disguise themselves as trusted organisations.",
-                    "Always check the sender's email address and avoid clicking on suspicious links."
-                }
-            },
-            { "password safety", new List<string>
-                {
-                    "Make sure to use strong, unique passwords for each account. Avoid using personal details in your passwords.",
-                    "Enable two-factor authentication for added security on important accounts."
-                }
-            }
+            { "password", new List<string> {
+                "Use strong, unique passwords for each account.",
+                "Avoid using names or birthdays in your passwords.",
+                "Enable two-factor authentication for added security."
+            }},
+            { "phishing", new List<string> {
+                "Don't click on suspicious links in emails.",
+                "Verify the sender before responding to emails.",
+                "Look out for poor grammar and urgent language in scam emails."
+            }},
+            { "privacy", new List<string> {
+                "Review your social media privacy settings regularly.",
+                "Avoid oversharing personal information online.",
+                "Use encrypted messaging apps for private chats."
+            }},
+            { "scam", new List<string> {
+                "Never send money to unknown people online.",
+                "Scammers often impersonate authority figures.",
+                "Check official websites for contact info."
+            }},
+            { "vpn", new List<string> {
+                "Use a VPN to protect your data on public Wi-Fi.",
+                "VPNs encrypt your internet traffic.",
+                "Choose reputable VPN providers for maximum safety."
+            }}
         };
 
-        // Get random response for a specific topic
-        public string GetRandomResponse(string topic)
+        public string GetRandomResponse(string userInput)
         {
-            if (topicResponses.ContainsKey(topic))
+            foreach (var keyword in keywordResponses.Keys)
             {
-                var responses = topicResponses[topic];
-                Random rand = new Random();
-                return responses[rand.Next(responses.Count)];
+                if (userInput.Contains(keyword))
+                {
+                    var responses = keywordResponses[keyword];
+                    Random rnd = new Random();
+                    return responses[rnd.Next(responses.Count)];
+                }
             }
-            return "Sorry, I don't have information on that topic.";
+            return "I'm not sure I understood that. Could you try asking differently?";
         }
     }
 }
-

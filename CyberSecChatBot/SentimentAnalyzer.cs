@@ -1,25 +1,16 @@
-﻿using System;
-
-namespace CyberSecChatBot
+﻿namespace CyberSecChatBot
 {
     public class SentimentAnalyzer
     {
-        // Simple sentiment analysis (could be enhanced further)
         public string AnalyzeSentiment(string input)
         {
-            if (input.Contains("worried") || input.Contains("scared"))
-            {
+            if (input.Contains("worried") || input.Contains("scared") || input.Contains("afraid"))
                 return "worried";
-            }
-            else if (input.Contains("happy") || input.Contains("great"))
-            {
+
+            if (input.Contains("happy") || input.Contains("great") || input.Contains("awesome"))
                 return "happy";
-            }
-            else if (input.Contains("confused"))
-            {
-                return "confused";
-            }
-            return "neutral"; // Default sentiment
+
+            return "neutral";
         }
     }
 }
