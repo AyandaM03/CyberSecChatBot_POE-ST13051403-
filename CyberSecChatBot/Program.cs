@@ -24,6 +24,14 @@ namespace CyberSecChatBot
             SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
             ResponseManager responseManager = new ResponseManager();
 
+           
+            TaskManager taskManager = new TaskManager();
+            QuizManager quizManager = new QuizManager();
+            NLPHandler nlpHandler = new NLPHandler();
+            ActivityLog activityLog = new ActivityLog();
+            Task task = new Task();
+            Question question = new Question();
+
         }
     }
 }
