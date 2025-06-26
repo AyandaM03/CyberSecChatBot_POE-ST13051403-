@@ -55,17 +55,11 @@ namespace CyberSecChatBot
 
                 if (user_asking != "exit")
                 {
-                    string sentiment = sentimentAnalyzer.AnalyzeSentiment(user_asking);
-
-                    if (sentiment == "worried")
+                    string sentimentResponse = sentimentAnalyzer.AnalyzeSentiment(user_asking);
+                    if (!string.IsNullOrEmpty(sentimentResponse))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        TypeEffect("ChatBot: It's okay to feel worried. I'm here to help you stay safe online.");
-                    }
-                    else if (sentiment == "happy")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        TypeEffect("ChatBot: Love that energy! Let’s learn more about cybersecurity!");
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        TypeEffect("ChatBot: " + sentimentResponse);
                     }
                     else
                     {
