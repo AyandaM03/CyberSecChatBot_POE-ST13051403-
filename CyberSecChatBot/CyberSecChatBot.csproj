@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityLog.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logo.cs" />
     <Compile Include="NLPHandler.cs" />
     <Compile Include="PlayNow.cs" />
@@ -55,6 +62,7 @@
     <Compile Include="ResponseManager.cs" />
     <Compile Include="Responses.cs" />
     <Compile Include="SentimentAnalyzer.cs" />
+    <Compile Include="TaskA.cs" />
     <Compile Include="TaskManager.cs" />
     <Compile Include="UserMemory.cs" />
     <Compile Include="UserPrompt.cs" />
