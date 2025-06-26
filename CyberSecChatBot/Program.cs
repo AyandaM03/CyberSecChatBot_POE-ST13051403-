@@ -37,6 +37,9 @@ namespace CyberSecChatBot
 
             Question question = new Question();
 
+            AppController appController = new AppController();
+
+            Prompt prompt = new Prompt();
         }
     }
 }
