@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CyberSecChatBot
 {
    public  class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // Display ASCII Logo
             Logo.Display();
@@ -39,7 +40,15 @@ namespace CyberSecChatBot
 
             AppController appController = new AppController();
 
-            Prompt prompt = new Prompt();
+            AddTaskForm addTaskForm = new AddTaskForm();
+
+            TaskListForm taskListForm = new TaskListForm();
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+
+
         }
     }
 }

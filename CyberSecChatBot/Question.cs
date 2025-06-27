@@ -2,7 +2,7 @@
 
 namespace CyberSecChatBot
 {
-    internal class Question
+   public class Question
     {
             public string Text { get; set; }
             public List<string> Options { get; set; } = new List<string>();

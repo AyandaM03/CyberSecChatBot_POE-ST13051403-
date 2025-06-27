@@ -14,12 +14,10 @@ namespace CyberSecChatBot
         private ResponseManager _responseManager = new ResponseManager();
         private SentimentAnalyzer _sentimentAnalyzer = new SentimentAnalyzer();
         private UserMemory _userMemory = new UserMemory();
-
+         
         public void ProcessInput(string userInput)
-        {
-            // Your existing processing logic here
-            // (You can copy your existing code for ProcessInput here)
-        }
+        { }
+        // Your existing processing logic here}
 
         // Public method to get all tasks
         public List<TaskA> GetAllTasks()
@@ -27,7 +25,13 @@ namespace CyberSecChatBot
             return _taskManager.GetAllTasks();
         }
 
+        public TaskA GetTaskByTitle(string title)
+        {
+            return _taskManager.GetTaskByTitle(title);
+        }
 
+
+        // Check due reminders and print to console (or can be expanded to UI alerts)
         public void CheckDueReminders()
         {
             foreach (var task in _taskManager.GetAllTasks())
@@ -43,49 +47,66 @@ namespace CyberSecChatBot
             }
         }
 
+        // Toggle completion status of a task by title
+        public void ToggleTaskCompletion(string taskTitle)
+        {
+            var task = _taskManager.GetTaskByTitle(taskTitle);
+            if (task != null)
+            {
+                task.IsCompleted = !task.IsCompleted;
+                _activityLog.AddLog($"Task '{taskTitle}' marked as {(task.IsCompleted ? "completed" : "not completed")}.");
+            }
+        }
+
+        // Delete task by title
+        public void DeleteTask(string taskTitle)
+        {
+            _taskManager.DeleteTask(taskTitle);
+            _activityLog.AddLog($"Task '{taskTitle}' deleted.");
+        }
+
+        // Get recent activity logs (limit count)
         public List<string> GetRecentActivityLogs()
         {
             return _activityLog.GetRecentLogs(10);
         }
 
-
+        // Handle user input, detect intent, and route accordingly
         public void HandleUserInput(string userInput)
-        {
-            // Check due reminders first
-            CheckDueReminders();
+        { CheckDueReminders();
 
-            var intent = _nlpHandler.DetectIntent(userInput);
+            userInput = userInput.ToLower(); // Normalize input for easier matching
 
-            switch (intent)
+            if (userInput.Contains("add task") || userInput.Contains("remind me") || userInput.Contains("set reminder"))
             {
-                case "add_task":
-                    HandleAddTask(userInput);
-                    break;
-
-                case "add_reminder":
-                    HandleAddTask(userInput);
-                    break;
-
-                case "start_quiz":
-                    RunQuiz();
-                    break;
-
-                case "show_activity":
-                    ShowActivityLog();
-                    break;
-
-                case "delete_task":
-                    HandleDeleteTask(userInput);
-                    break;
-
-                case "finish_quiz":
-                    HandleFinishQuiz();
-                    break;
-
-                default:
-                    HandleGeneralInput(userInput);
-                    break;
+                _activityLog.AddLog("Detected NLP command: Add task or reminder.");
+                HandleAddTask(userInput);
+                return;
             }
+            else if (userInput.Contains("quiz") || userInput.Contains("start quiz") || userInput.Contains("play game"))
+            {
+                _activityLog.AddLog("Detected NLP command: Start quiz.");
+                RunQuiz();
+                return;
+            }
+            else if (userInput.Contains("activity") || userInput.Contains("log") || userInput.Contains("what have you done"))
+            {
+                _activityLog.AddLog("Detected NLP command: Show activity log.");
+                ShowActivityLog();
+                return;
+            }
+            else if (userInput.Contains("delete task"))
+            {
+                _activityLog.AddLog("Detected NLP command: Delete task.");
+                HandleDeleteTask(userInput);
+                return;
+            }
+            else if (userInput.Contains("finish quiz") || userInput.Contains("end quiz"))
+            {
+                _activityLog.AddLog("Detected NLP command: Finish quiz.");
+                HandleFinishQuiz();
+                return;
+            }     HandleGeneralInput(userInput);
         }
 
         private void RunQuiz()
@@ -94,17 +115,9 @@ namespace CyberSecChatBot
         }
 
         private void HandleAddTask(string userInput)
-        {
-            // Remove the trigger keyword
-            string input = userInput.Replace("add task", "").Replace("remind me", "").Trim();
-
-            DateTime? reminderDate = null;
-
-            // Check if input contains "remind me" or "reminder"
-            if (userInput.Contains("remind me") || userInput.Contains("reminder"))
-            {
-                // Simple parsing
-                string[] parts;
+        {string input = userInput.Replace("add task", "").Replace("remind me", "").Trim();
+            DateTime? reminderDate = null; if (userInput.Contains("remind me") || userInput.Contains("reminder"))
+            { string[] parts;
                 if (userInput.Contains("remind me"))
                     parts = userInput.Split(new[] { "remind me" }, StringSplitOptions.RemoveEmptyEntries);
                 else
@@ -119,9 +132,7 @@ namespace CyberSecChatBot
             }
 
             _taskManager.AddTask(input, $"Task added: {input}", reminderDate);
-            string logMessage = $"Task added: '{input}'" + (reminderDate.HasValue
-                ? $" (reminder set for {reminderDate.Value:d})."
-                : ".");
+            string logMessage = $"Task added: '{input}'" + (reminderDate.HasValue ? $" (reminder set for {reminderDate.Value:d})." : ".");
             _activityLog.AddLog(logMessage);
 
             Console.WriteLine($"ChatBot: Task added - '{input}'" + (reminderDate.HasValue ? $", reminder set for {reminderDate.Value:d}" : ""));
@@ -130,8 +141,7 @@ namespace CyberSecChatBot
         private void HandleDeleteTask(string userInput)
         {
             var title = userInput.Replace("delete task", "").Trim();
-            _taskManager.DeleteTask(title);
-            _activityLog.AddLog($"Task deleted: '{title}'.");
+            DeleteTask(title);
             Console.WriteLine($"ChatBot: Task deleted - '{title}'");
         }
 
@@ -229,10 +239,7 @@ namespace CyberSecChatBot
             MessageBox.Show(final, "Quiz Summary");
 
             _activityLog.AddLog($"Quiz finished with Score: {_quizManager.Score}.");
-        }
-
-
-        private void ShowActivityLog()
+        } private void ShowActivityLog()
         {
             var recentLogs = _activityLog.GetRecentLogs(10);
 
@@ -249,7 +256,7 @@ namespace CyberSecChatBot
             }
 
         }
-        private int AskQuestion(string questionText, string[] options)
+ private int AskQuestion(string questionText, string[] options)
         {
             using (Form dialog = new Form())
             {
@@ -292,7 +299,36 @@ namespace CyberSecChatBot
             }
         }
 
+        public void AddTaskFromUI(string title, DateTime? reminder, bool completed)
+        {
+            _taskManager.AddTask(title, $"Task added: {title}", reminder);
 
+            var task = _taskManager.Tasks.Find(t => t.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+            if (task != null)
+            {
+                task.IsCompleted = completed;
+            }
+
+            string logMessage = $"Task added: '{title}'" + (reminder.HasValue ? $" (reminder set for {reminder.Value:d})." : ".");
+            _activityLog.AddLog(logMessage);
+
+            Console.WriteLine($"ChatBot: Task added - '{title}'" + (reminder.HasValue ? $", reminder set for {reminder.Value:d}" : ""));
+        }
+
+        public void UpdateTaskCompletion(string title, bool isCompleted)
+        {
+            var task = _taskManager.Tasks.Find(t => t.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+            if (task != null)
+            {
+                task.IsCompleted = isCompleted;
+            }
+        }
+
+        public void LogActivity(string message)
+        {
+            _activityLog.AddLog(message);
+        }
     }
 }
+
 
